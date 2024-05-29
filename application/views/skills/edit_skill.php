@@ -209,7 +209,7 @@ $(document).ready(function() {
 		<div class="col-sm-6">
 		    <div class="row previewfile" style="display:block">
 		        <div class="col-sm-12">
-		            <iframe src="<?php echo base_url('pdf/'.$cadet->pdf_link) ?>" id="iframe-pdf" width="100%" height="500px"></iframe>
+		            <iframe src="" id="iframe-pdf" width="100%" height="500px"></iframe>
 		        </div>
 	        </div>
         </div>
@@ -232,6 +232,31 @@ $(document).ready(function() {
 
 
 <script>
+	const searchFile = async (text, result)=> {
+		const response = await fetch('<?php echo base_url("student/fetch_file");?>', {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({text,result}),
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+			console.log(json.url)
+			// url = url.replace('//','/');
+			if(json.url!=""){
+			    document.querySelector('#iframe-pdf').src = '<?php echo base_url();?>pdf/'+json.url;
+			}else{
+				// return '';
+			}
+		}else{
+				// return '';
+			}
+            
+    }
+	var text1="<?php echo $cadet->link;?>";
+	var res1="<?php echo $cadet->annual_or_semester_details;?>";
+
+	searchFile(text1, res1)
 	$(document).ready(function(){
         $("#currentdetails").click(function(){
 			var input = "<?php echo $id;?>";

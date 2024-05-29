@@ -322,7 +322,7 @@ if($sort_type=="asc"){
 								<td><?php echo $l->annual_or_semester_details; ?></td>
 								<td><?php echo $l->pass_out_year; ?></td>
 								<td><?php echo $l->result; ?></td>
-								<td><a href="#" onclick="searchFile('<?php echo $l->link; ?>')"><?php echo $l->link; ?></td>
+								<td><a href="#" onclick="searchFile('<?php echo $l->link; ?>','<?php echo $l->annual_or_semester_details; ?>')"><?php echo $l->link; ?></td>
 								
 								<td>
 								    <a href="<?php echo base_url('student/edit_skill/'.$id.'/'.$l->id); ?>" class="" title="Edit Listing"><i class="fas fa-pencil-alt" style=" font-size:1.3em; position:relative; top:2px; color:#ffb800;"></i> Edit</a>
@@ -411,18 +411,22 @@ if($sort_type=="asc"){
         }   
 		window.location.href = "<?php echo base_url('student/delete_skill/'.$id.'/');?>"+delete_ids;
 	}
-	const searchFile = async (text)=> {
+	const searchFile = async (text, result)=> {
 		const response = await fetch('<?php echo base_url("student/fetch_file");?>', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({text}),
+            body: JSON.stringify({text,result}),
         })
         const json = await response.json()
 
         if (response.ok) {
 			console.log(json.url)
 			// url = url.replace('//','/');
-			window.open('<?php echo base_url();?>pdf/'+json.url,'_blank');
+			if(json.url!=""){
+			    window.open('<?php echo base_url();?>pdf/'+json.url,'_blank');
+			}else{
+				alert("File not found")
+			}
 		}
             
         }

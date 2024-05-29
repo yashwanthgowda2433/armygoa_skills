@@ -647,11 +647,28 @@ class Student extends CI_Controller {
 			// print_r(FCPATH . 'pdf');die;
 
 			$files = $this->searchFiles(FCPATH . 'pdf',$requestData['text']);
+			// print_r($files);
 
 			$path = '';
 			foreach ($files as $file) {
-                $path = $file;
+				$string = $requestData['result'];
+                // Convert the string to lowercase
+                $lowercaseString = strtolower($string);
+
+                // Check if 'fail' is present in the lowercase string
+                if (strpos($lowercaseString, 'fail') !== false) {
+					$string2 = strtolower($file);
+				    if (strpos($string2, 'fail') !== false) {
+						$path = $file;
+					    break;
+
+					}
+				} else {
+					$path = $file;
+					break;
+				}
             }
+			// die;
 			if($path != ''){
 				$pdf_path = explode('\pdf',$path);
 				if(count($pdf_path)>1){
@@ -660,6 +677,7 @@ class Student extends CI_Controller {
 			// print_r(explode('\pdf',$path));die;
 
 			}
+			// die;
 
 		    //     $file = glob($root."pdf/{,*/,*/*/,*/*/*/}".$requestData['text'].".pdf", GLOB_BRACE);
 			// 	print_r($file);
