@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Table Detection and Conversion</title>
+   <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+   <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
+</head>
+<body>
+   <input type="file" id="imageInput" accept="image/*">
+   <button onclick="processImage()">Process Image</button>
+   <div id="output"></div>
+
+   <script>
+       // OpenCV.js initialization
+       function onOpenCvReady() {
+           // OpenCV is ready
+           console.log('OpenCV.js is ready');
+       }
+   </script>
+   <script>
+   async function processImage() {
+    const imageInput = document.getElementById('imageInput');
+    const outputDiv = document.getElementById('output');
+
+    const file = imageInput.files[0];
+
+    if (file) {
+        // Read the image using OpenCV.js
+        const imageData = await fileToImageData(file);
+        const src = cv.matFromImageData(imageData);
+
+        // Convert the image to grayscale for better processing
+        const gray = new cv.Mat();
+        cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+
+        // Apply thresholding to create a binary image
+        const thresholded = new cv.Mat();
+        cv.threshold(gray, thresholded, 128, 255, cv.THRESH_BINARY);
+
+        // Find contours in the binary image
+        const contours = new cv.MatVector();
+        const hierarchy = new cv.Mat();
+        cv.findContours(thresholded, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+        // Process each contour
+        for (let i = 0; i < contours.size(); ++i) {
+            const contour = contours.get(i);
+            const area = cv.contourArea(contour);
+
+            // Customize the condition for detecting tables based on contour area
+            if (area > 1000) {
+                // If a contour is considered a table, extract and OCR the text
+                const tableRegion = getTableRegion(src, contour);
+                const { data: { text } } = await Tesseract.recognize(tableRegion);
+
+                // Display the table in HTML
+                displayTable(text);
+            }
+        }
+
+        // Release resources
+        contours.delete();
+        hierarchy.delete();
+        src.delete();
+        gray.delete();
+        thresholded.delete();
+    } else {
+        outputDiv.innerHTML = 'Please select an image.';
+    }
+}
+
+function fileToImageData(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = document.createElement('img');
+			
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                const imageData = ctx.getImageData(0, 0, img.width, img.height);
+
+                // Check if the image data has a non-zero width
+                if (imageData.width !== 0) {
+                    resolve(imageData);
+                } else {
+                    console.error('Error: Image data width is 0.');
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+    function getTableRegion(src, contour) {
+        // Get the bounding rectangle of the contour
+        const rect = cv.boundingRect(contour);
+
+        // Crop the region from the original image
+        const tableRegion = new cv.Mat();
+        src.roi = rect;
+        src.copyTo(tableRegion);
+        src.roi = new cv.Rect(0, 0, src.cols, src.rows);
+
+        return tableRegion;
+    }
+
+    // function fileToImageData(file) {
+    //     return new Promise((resolve) => {
+    //         const reader = new FileReader();
+    //         reader.onload = (e) => {
+    //             const img = new Image();
+    //             img.onload = () => {
+    //                 const canvas = document.createElement('canvas');
+    //                 canvas.width = img.width;
+    //                 canvas.height = img.height;
+    //                 const ctx = canvas.getContext('2d');
+    //                 ctx.drawImage(img, 0, 0, img.width, img.height);
+    //                 const imageData = ctx.getImageData(0, 0, img.width, img.height);
+    //                 resolve(imageData);
+    //             };
+    //             img.src = e.target.result;
+    //         };
+    //         reader.readAsDataURL(file);
+    //     });
+    // }
+
+    function displayTable(tableText) {
+        const outputDiv = document.getElementById('output');
+
+        // Create an HTML table and populate it with the extracted text
+        const table = document.createElement('table');
+        const rows = tableText.split('\n');
+
+        rows.forEach(rowText => {
+            const row = document.createElement('tr');
+            const cells = rowText.split('\t');
+
+            cells.forEach(cellText => {
+                const cell = document.createElement('td');
+                cell.textContent = cellText.trim();
+                row.appendChild(cell);
+            });
+
+            table.appendChild(row);
+        });
+
+        // Display the table in the output div
+        outputDiv.appendChild(table);
+    }
+
+</script>
+
+</body>
+</html>

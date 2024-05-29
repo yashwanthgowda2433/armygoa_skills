@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();""></script>
+  <title>Table Detection</title>
+</head>
+<body>
+  <input type="file" accept="image/*" onchange="handleFileSelect(event)">
+  <div id="output"></div>
+
+  <script>
+    function onOpenCvReady() {
+      console.log('OpenCV.js is ready');
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const image = new Image();
+          image.src = e.target.result;
+
+          image.onload = function () {
+            detectTable(image);
+          };
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function detectTable(image) {
+      // Use Tesseract.js to extract text from the image
+      Tesseract.recognize(
+        image,
+        'eng', // language
+        { logger: info => console.log(info) }
+      ).then(({ data: { text } }) => {
+        // TODO: Extract table data from the text and convert to HTML table
+        const htmlTable = convertTextToHtmlTable(text);
+        document.getElementById('output').innerHTML = htmlTable;
+      });
+    }
+
+    function convertTextToHtmlTable(text) {
+      // TODO: Implement logic to parse text and generate HTML table
+      // You may need to use regular expressions or other methods to extract table data
+
+      // For simplicity, let's assume a basic table structure
+	  console.log("=======yashshhss=======")
+	  console.log(text)
+      const tableHtml = `
+        <table border="1">
+          <tr>
+            <td>Header 1</td>
+            <td>Header 2</td>
+          </tr>
+          <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+          </tr>
+        </table>
+      `;
+
+      return tableHtml;
+    }
+  </script>
+</body>
+</html>

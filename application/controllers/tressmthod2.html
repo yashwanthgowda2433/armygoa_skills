@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- https://cdnjs.com/libraries/tesseract.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();"></script>
+  <title>Table Detection</title>
+</head>
+<body>
+  <input type="file" accept="image/*" onchange="handleFileSelect(event)">
+  <div id="output"></div>
+
+  <script> 
+    function onOpenCvReady() {
+      console.log('OpenCV.js is ready');
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const image = new Image();
+          image.src = e.target.result;
+
+          image.onload = function () {
+            detectTable(image);
+          };
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function detectTable(image) {
+      Tesseract.recognize(
+        image,
+        'eng',
+        { logger: info => console.log(info) }
+      ).then(({ data: { text } }) => {
+        const htmlTable = convertTextToHtmlTable(text);
+        document.getElementById('output').innerHTML = htmlTable;
+      });
+    }
+
+    function convertTextToHtmlTable(text) {
+      const rows = text.split('\n').map(row => row.trim());
+
+      let htmlTable = '<table border="1">';
+
+      rows.forEach(row => {
+        htmlTable += '<tr>';
+        const cells = row.split(/\s+/); // Assuming space as the delimiter, adjust as needed
+
+        cells.forEach(cell => {
+          const [colspan, content] = extractColspan(cell);
+          htmlTable += `<td colspan="${colspan || 1}">${content}</td>`;
+        });
+
+        htmlTable += '</tr>';
+      });
+
+      htmlTable += '</table>';
+      return htmlTable;
+    }
+
+    function extractColspan(cell) {
+      // Implement logic to extract colspan from the cell content
+      // You may need to use regular expressions or other methods based on your specific format
+
+      // For simplicity, assume no colspan for now
+      return [null, cell];
+    }
+  </script>
+</body>
+</html>

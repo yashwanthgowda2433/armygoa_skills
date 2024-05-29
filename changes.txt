@@ -1,0 +1,2 @@
+Add new users option in admin login.
+Add record page adding two new fields with pdf viewer to right side of the screen.

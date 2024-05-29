@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
+    <title>Table Detection with Tesseract.js</title>
+</head>
+<body>
+  <input type="file" accept="image/*" onchange="handleFileSelect(event)">
+
+    <div id="output"></div>
+
+    <script>
+        // Your JavaScript code will go here
+    const outputDiv = document.getElementById('output');
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        // Replace 'your-image.png' with the path to your image file
+        reader.onload = function (e) {
+          const image = new Image();
+          image.src = e.target.result;
+
+          image.onload = function () {
+            Tesseract.recognize(
+              image,
+              'eng',
+              { logger: info => outputDiv.innerHTML += info.words.map(w => w.text).join(' ') + '\n' }
+            )
+    //         .then((data) => {
+    //             console.log(text)
+    //     // const htmlTable = convertTextToHtmlTable(text);
+    //     // document.getElementById('output').innerHTML = htmlTable;
+    //   });
+          };
+        };
+
+        reader.readAsDataURL(file);
+        
+      }
+    }
+    </script>
+</body>
+</html>
