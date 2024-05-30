@@ -652,23 +652,73 @@ class Student extends CI_Controller {
 			$path = '';
 			foreach ($files as $file) {
 				$string = $requestData['result'];
+				$year = $requestData['year'];
+
                 // Convert the string to lowercase
-                $lowercaseString = strtolower($string);
+                $lowercaseString = str_replace("-"," ",strtolower($string));
+				if(str_contains($lowercaseString, "(")){
+					$ex_str = explode("(",$lowercaseString);
+					$lowercaseString = $ex_str[0];
+				}
+				$string2 = strtolower($file);
+				$split_str = explode("/",$string2);
+				// print_r($string2);
+				// echo '<br>';
+				// print_r($lowercaseString);
+				// echo '<br>';
+				// print_r($year);
+				// echo '<br>';
+				// print_r($split_str[2]);
+				// echo '<br>';
+				$position_year = strpos($split_str[2], $year);
+
+				$position_sem = strpos($split_str[2], $lowercaseString);
+				$new_po_str = substr($split_str[2],$position_sem);
+				// print_r($lowercaseString);
+				// echo '<br>';
+				// print_r($new_po_str);die;
+
+				// Debugging: Output the position
+
+                // echo "Position: " . var_export($position_sem, true) . "<br>";
+
+                // // Debugging: Output the position
+                // echo "Position: " . $position . "<br>";
+
+
+				// if($position_year !== false && var_export($position_sem, true)){
+				// 	print_r("true");
+				// }else{
+				// 	print_r("dalse");
+				// }
+				// die;
 
                 // Check if 'fail' is present in the lowercase string
-                if (strpos($lowercaseString, 'fail') !== false) {
-					$string2 = strtolower($file);
-				    if (strpos($string2, 'fail') !== false) {
+				// $c_pos = $position_sem;
+				// if($c_pos>=0){
+				// 	if($lowercaseString.le)
+				// }
+				if($position_year !== false && var_export($position_sem, true) !== false && $new_po_str==$lowercaseString){
+
+					// $string2 = strtolower($file);
+				    // if (strpos($string2, 'fail') !== false) {
+						// print_r('1');
 						$path = $file;
 					    break;
-
-					}
+					// }
 				} else {
-					$path = $file;
-					break;
+					// print_r('2');
+
+					// $path = $file;
+					// break;
 				}
             }
 			// die;
+			if($path == ''){
+				foreach ($files as $file) {
+					$path = $file;
+				}
+			}
 			if($path != ''){
 				$pdf_path = explode('\pdf',$path);
 				if(count($pdf_path)>1){

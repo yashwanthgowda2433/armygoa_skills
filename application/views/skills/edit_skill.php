@@ -232,11 +232,11 @@ $(document).ready(function() {
 
 
 <script>
-	const searchFile = async (text, result)=> {
+	const searchFile = async (text, result, year)=> {
 		const response = await fetch('<?php echo base_url("student/fetch_file");?>', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({text,result}),
+            body: JSON.stringify({text,result, year1}),
         })
         const json = await response.json()
 
@@ -255,8 +255,9 @@ $(document).ready(function() {
     }
 	var text1="<?php echo $cadet->link;?>";
 	var res1="<?php echo $cadet->annual_or_semester_details;?>";
+	var year1 = "<?php echo $cadet->pass_out_year;?>";
 
-	searchFile(text1, res1)
+	searchFile(text1, res1,year1)
 	$(document).ready(function(){
         $("#currentdetails").click(function(){
 			var input = "<?php echo $id;?>";
