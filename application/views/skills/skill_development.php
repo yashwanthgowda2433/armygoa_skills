@@ -180,6 +180,29 @@ $(document).ready(function() {
 		        </div>
 				<div class="col-sm-2 mt-3">
 			        <div class="form-control">
+					    <!-- <input typt="text" class="form-input" placeholder="Annual/Semester Details" value="<?= $this->input->get('sem_details')?$this->input->get('sem_details'):''?>" name="sem_details" style="width:100%;"/> -->
+						<label style="font-size:10px;margin-bottom:0px;">Annual/Semester Details</label>
+						<select class="form-input" name="ann_sem_details"  style="width:100%;">
+							<option></option>
+							<?php if($this->input->get('ann_sem_details')=="All"){ ?>
+								<option selected>All</option>
+							<?php }else{?>
+							        <option>All</option>
+							<?php }?>
+							<?php foreach($annual_or_semester_details as $data){
+								if($data->annual_or_semester_details){
+								if($this->input->get('ann_sem_details')==$data->annual_or_semester_details){ 
+								    echo '<option selected>'.$data->annual_or_semester_details.'</option>';
+								}else{
+									echo '<option>'.$data->annual_or_semester_details.'</option>';
+								}
+							    }
+							}?>
+						</select>
+			        </div>
+		        </div>
+				<div class="col-sm-2 mt-3">
+			        <div class="form-control">
 						<label style="font-size:10px;margin-bottom:0px;">Result</label>
 						<select class="form-input" name="result"  style="width:100%;">
 							<option></option>
@@ -297,6 +320,7 @@ if($sort_type=="asc"){
 								<th>Name</th>
 								<th>ITI Center</th>
 								<th>Session</th>
+								<th>ATS Establishment Name</th>
 								<th>Annual/Semester</th>
 								<th>Annual/Semester Details</th>
 								<th>Pass Out Year</th>
@@ -318,6 +342,7 @@ if($sort_type=="asc"){
 								<td><?php echo $l->name; ?></td>
 								<td><?php echo $l->iti_center; ?></td>
 								<td><?php echo $l->session; ?></td>
+								<td><?php echo $l->ats_establishment_name; ?></td>
 								<td><?php echo $l->annual_or_semester; ?></td>
 								<td><?php echo $l->annual_or_semester_details; ?></td>
 								<td><?php echo $l->pass_out_year; ?></td>

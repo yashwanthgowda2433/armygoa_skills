@@ -8,7 +8,7 @@ class Skill_development_table extends CI_Model {
 	public static $trade = 'trade';
 	public static $roll_no = 'roll_no';
 	public static $name = 'name';
-	public static $password = 'password';
+	public static $ats_establishment_name = 'ats_establishment_name';
 	public static $iti_center = 'iti_center';
 	public static $session = 'session';
 	public static $annual_or_semester = 'annual_or_semester';
@@ -30,6 +30,7 @@ class Skill_development_model extends Skill_development_table {
                .self::$trade.' as trade,'
                .self::$roll_no.' as roll_no,'
                .self::$name.' as name,'
+               .self::$ats_establishment_name.' as ats_establishment_name,'
                .self::$iti_center.' as iti_center,'
                .self::$session.' as session,'
                .self::$annual_or_semester.' as annual_or_semester,'
@@ -57,13 +58,21 @@ class Skill_development_model extends Skill_development_table {
         {
             $this->db->like(self::$name, $params['name']);
         }
+        if(!empty($params['ats_establishment_name']) && $params['ats_establishment_name']!="All")
+        {
+            $this->db->where(self::$ats_establishment_name, $params['ats_establishment_name']);
+        }
         if(!empty($params['iti_center']) && $params['iti_center']!="All")
         {
             $this->db->where(self::$iti_center, $params['iti_center']);
         }
         if(!empty($params['sem_details']) && $params['sem_details']!="All")
         {
-            $this->db->where(self::$annual_or_semester_details, $params['sem_details']);
+            $this->db->where(self::$annual_or_semester, $params['sem_details']);
+        }
+        if(!empty($params['ann_sem_details']) && $params['ann_sem_details']!="All")
+        {
+            $this->db->where(self::$annual_or_semester_details, $params['ann_sem_details']);
         }
         if(!empty($params['pass_out_year']) && $params['pass_out_year']!="All")
         {
@@ -118,13 +127,21 @@ class Skill_development_model extends Skill_development_table {
         {
             $this->db->like(self::$name, $params['name']);
         }
+        if(!empty($params['ats_establishment_name']) && $params['ats_establishment_name']!="All")
+        {
+            $this->db->where(self::$ats_establishment_name, $params['ats_establishment_name']);
+        }
         if(!empty($params['iti_center']) && $params['iti_center']!="All")
         {
             $this->db->where(self::$iti_center, $params['iti_center']);
         }
         if(!empty($params['sem_details']) && $params['sem_details']!="All")
         {
-            $this->db->where(self::$annual_or_semester_details, $params['sem_details']);
+            $this->db->where(self::$annual_or_semester, $params['sem_details']);
+        }
+        if(!empty($params['ann_sem_details']) && $params['ann_sem_details']!="All")
+        {
+            $this->db->where(self::$annual_or_semester_details, $params['ann_sem_details']);
         }
         if(!empty($params['pass_out_year']) && $params['pass_out_year']!="All")
         {
@@ -181,10 +198,18 @@ class Skill_development_model extends Skill_development_table {
         $query = $this->db->get(self::$table_name);
         return $query->result();
     }
-    public function get_annual_or_semester(){
-        $this->db->select('annual_or_semester_details as annual_or_semester');
+    public function get_annual_or_semesterdetails(){
+        $this->db->select('annual_or_semester_details');
         $this->db->group_by('annual_or_semester_details');
         $this->db->order_by("annual_or_semester_details", "asc");
+
+        $query = $this->db->get(self::$table_name);
+        return $query->result();
+    }
+    public function get_annual_or_semester(){
+        $this->db->select('annual_or_semester');
+        $this->db->group_by('annual_or_semester');
+        $this->db->order_by("annual_or_semester", "asc");
 
         $query = $this->db->get(self::$table_name);
         return $query->result();
@@ -214,8 +239,12 @@ class Skill_development_model extends Skill_development_table {
         if(!empty($params['name']))
         {
             $this->db->set(self::$name,$params['name']);
-            $this->db->set(self::$password,$params['name']."@2023");
+            // $this->db->set(self::$password,$params['name']."@2023");
 
+        }
+        if(!empty($params['ats_establishment_name']))
+        {
+            $this->db->set(self::$ats_establishment_name,$params['ats_establishment_name']);
         }
         if(!empty($params['iti_center']))
         {
@@ -286,6 +315,10 @@ class Skill_development_model extends Skill_development_table {
             $this->db->set(self::$name,$params['name']);
            // $this->db->set(self::$password,$params['name']."@2023");
 
+        }
+        if(!empty($params['ats_establishment_name']))
+        {
+            $this->db->set(self::$ats_establishment_name,$params['ats_establishment_name']);
         }
         if(!empty($params['iti_center']))
         {

@@ -183,6 +183,18 @@ $(document).ready(function() {
 			<div class="row heading-row">
 		        <div class="col-sm-4 mt-2">
 			        <div class="form-control">
+				        <label class="form-label">ATS Establishment Name :</label>
+			        </div>
+		        </div>
+				<div class="col-sm-7 mt-1">
+			        <div class="form-control">
+					    <input typt="text" class="form-input" name="ats" style="width:100%;"/>
+			        </div>
+		        </div>
+	        </div>
+			<div class="row heading-row">
+		        <div class="col-sm-4 mt-2">
+			        <div class="form-control">
 				        <label class="form-label">Annual or Semester :</label>
 			        </div>
 		        </div>

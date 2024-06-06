@@ -157,6 +157,7 @@ class Student extends CI_Controller {
 		$view_params['name'] = $this->input->get('name');
 		$view_params['iti_center'] = $this->input->get('iti_center');
 		$view_params['sem_details'] = $this->input->get('sem_details');
+		$view_params['ann_sem_details'] = $this->input->get('ann_sem_details');
 		$view_params['scheme_of_examination'] = $this->input->get('scheme_of_examination');
 		$view_params['pass_out_year'] = $this->input->get('pass_out_year');
 		$view_params['result'] = $this->input->get('result');
@@ -209,6 +210,8 @@ class Student extends CI_Controller {
 			$data['iti_center'] = $this->skill_development->get_iti_center();
 			$data['pass_out_year'] = $this->skill_development->get_pass_out_year();
 			$data['annual_or_semester'] = $this->skill_development->get_annual_or_semester();
+			$data['annual_or_semester_details'] = $this->skill_development->get_annual_or_semesterdetails();
+
 			$data['result'] = $this->skill_development->get_result();
 
 			// print_r($data['scheme_of_examination']);die;
@@ -304,6 +307,8 @@ class Student extends CI_Controller {
 		    $addparams['name'] = $this->input->post('name');
 		    $addparams['iti_center'] = $this->input->post('iti_center');
 		    $addparams['session'] = $this->input->post('session');
+		    $addparams['ats_establishment_name'] = $this->input->post('ats');
+
 		    $addparams['annual_or_semester'] = $this->input->post('annual_or_semester');
 		    $addparams['annual_or_semester_details'] = $this->input->post('annual_or_semester_details');
 			$addparams['pass_out_year'] = $this->input->post('pass_out_year');
@@ -357,6 +362,8 @@ class Student extends CI_Controller {
 			$addparams['trade'] = $this->input->post('trade');
 		    $addparams['roll_no'] = $this->input->post('roll_no');
 		    $addparams['name'] = $this->input->post('name');
+		    $addparams['ats_establishment_name'] = $this->input->post('ats');
+
 		    $addparams['iti_center'] = $this->input->post('iti_center');
 		    $addparams['session'] = $this->input->post('session');
 		    $addparams['annual_or_semester'] = $this->input->post('annual_or_semester');
