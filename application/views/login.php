@@ -38,7 +38,7 @@ $(document).ready(function() {
 	        <div class="col-md-12 mt-5">
 				<div class="row">
 				    <div class="col-md-4" style="text-align: end;margin-top: 7px;padding-right: 0px;">
-                        <label for="validationCustom01" class="form-label">Name :</label>
+                        <label for="validationCustom01" class="form-label">Email :</label>
                     </div>
 				    <div class="col-md-8">
                         <input type="text" class="form-control" name="cadet_name" id="validationCustom01" required>

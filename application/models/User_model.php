@@ -27,9 +27,9 @@ class User_model extends User_table {
         $this->db->select($sql);
         if(!empty($params['email']))
         {
-            $this->db->where(self::$name, $params['email']);
-            $this->db->or_where(self::$email, $params['email']);
-            $this->db->or_where(self::$mobile, $params['mobile']);
+            // $this->db->where(self::$name, $params['email']);
+            $this->db->where(self::$email, $params['email']);
+            // $this->db->or_where(self::$mobile, $params['email']);
 
         }
         if(!empty($params['search']))
@@ -49,6 +49,8 @@ class User_model extends User_table {
             $this->db->where(self::$password,$params['password']);
 
             $query = $this->db->get(self::$table_name);
+        // print_r($this->db->last_query());exit;
+
             return $query->row();
 
 
