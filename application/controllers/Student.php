@@ -64,13 +64,11 @@ class Student extends CI_Controller {
 
 	public function submit_login()
 	{
-		$this->form_validation->set_rules('cadet_name', 'cadet_name', 'trim|required|valid_email|max_length[70]');
-		$this->form_validation->set_rules('password', 'password', 'trim|required|max_length[32]');
+		$this->form_validation->set_rules('cadet_name', 'cadet_name', 'trim|required|valid_email|max_length[30]');
+		$this->form_validation->set_rules('password', 'password', 'trim|required|max_length[15]');
 
 		if($this->form_validation->run()){
 		   
-			
-		
 		        $view_params['email'] = $this->input->post('cadet_name');
 		        $view_params['password'] = $this->input->post('password');
 
