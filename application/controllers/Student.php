@@ -420,6 +420,7 @@ class Student extends CI_Controller {
 			$data['pass_out_year'] = $this->skill_development->get_pass_out_year();
 			$data['annual_or_semester'] = $this->skill_development->get_annual_or_semester();
 			$data['annual_or_semester_details'] = $this->skill_development->get_annual_or_semesterdetails();
+			$data['result'] = $this->skill_development->get_result();
 
 		   if(!empty($cadet->name))
 		   {
