@@ -1343,3 +1343,7 @@ i.fa-calendar-alt {
     font-size: 17px;
     color: #797979;
 }
+.form-group {
+
+    padding: 10px 12px;
+}

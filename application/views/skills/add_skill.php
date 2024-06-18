@@ -111,12 +111,27 @@ $(document).ready(function() {
 		    <div class="row heading-row">
 		        <div class="col-sm-4 mt-2">
 			        <div class="form-control">
-				        <label class="form-label">Scheme of Examination :</label>
+				        <label class="form-label">Scheme&nbsp;of&nbsp;Examination&nbsp;:</label>
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="scheme_of_examination" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="scheme_of_examination" style="width:100%;"/> -->
+						<select class="form-control select2 scheme_of_examination select2-hidden-accessible" name="scheme_of_examination"  style="width:100%;">
+							<option></option>
+							
+							
+							<?php foreach($scheme_of_examination as $data){
+								if($data->scheme_of_examination){
+
+								if($this->input->get('scheme_of_examination')==$data->scheme_of_examination){ 
+								    echo '<option selected>'.$data->scheme_of_examination.'</option>';
+								}else{
+									echo '<option>'.$data->scheme_of_examination.'</option>';
+								}
+							}
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -127,8 +142,22 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="trade" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="trade" style="width:100%;"/> -->
+						<select class="form-control select2 trade select2-hidden-accessible" name="trade"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($trade as $data){
+								if($data->trade){
+
+								if($this->input->get('trade')==$data->trade){ 
+								    echo '<option selected>'.$data->trade.'</option>';
+								}else{
+									echo '<option>'.$data->trade.'</option>';
+								}
+							}
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -163,8 +192,21 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="iti_center" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="iti_center" style="width:100%;"/> -->
+						<select class="form-control select2 iti_center select2-hidden-accessible" name="iti_center"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($iti_center as $data){
+								if($data->iti_center){
+								if($this->input->get('iti_center')==$data->iti_center){ 
+								    echo '<option selected>'.$data->iti_center.'</option>';
+								}else{
+									echo '<option>'.$data->iti_center.'</option>';
+								}
+							    }
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -199,8 +241,21 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="annual_or_semester" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="annual_or_semester" style="width:100%;"/> -->
+						<select class="form-control select2 annual_or_semester select2-hidden-accessible" name="annual_or_semester"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($annual_or_semester as $data){
+								if($data->annual_or_semester){
+								if($this->input->get('sem_details')==$data->annual_or_semester){ 
+								    echo '<option selected>'.$data->annual_or_semester.'</option>';
+								}else{
+									echo '<option>'.$data->annual_or_semester.'</option>';
+								}
+							    }
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -211,8 +266,21 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="annual_or_semester_details" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="annual_or_semester_details" style="width:100%;"/> -->
+						<select class="form-control annual_or_semester_details iti_center select2-hidden-accessible" name="annual_or_semester_details"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($annual_or_semester_details as $data){
+								if($data->annual_or_semester_details){
+								if($this->input->get('ann_sem_details')==$data->annual_or_semester_details){ 
+								    echo '<option selected>'.$data->annual_or_semester_details.'</option>';
+								}else{
+									echo '<option>'.$data->annual_or_semester_details.'</option>';
+								}
+							    }
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -223,8 +291,21 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="pass_out_year" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="pass_out_year" style="width:100%;"/> -->
+						<select class="form-control select2 pass_out_year select2-hidden-accessible" name="pass_out_year"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($pass_out_year as $data){
+								if($data->pass_out_year){
+								if($this->input->get('pass_out_year')==$data->pass_out_year){ 
+								    echo '<option selected>'.$data->pass_out_year.'</option>';
+								}else{
+									echo '<option>'.$data->pass_out_year.'</option>';
+								}
+							    }
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -235,8 +316,21 @@ $(document).ready(function() {
 			        </div>
 		        </div>
 				<div class="col-sm-7 mt-1">
-			        <div class="form-control">
-					    <input typt="text" class="form-input" name="result" style="width:100%;"/>
+			        <div class="form-group">
+					    <!-- <input typt="text" class="form-input" name="result" style="width:100%;"/> -->
+						<select class="form-control select2 result select2-hidden-accessible" name="result"  style="width:100%;">
+							<option></option>
+							
+							<?php foreach($result as $data){
+								if($data->result){
+								if($this->input->get('result')==$data->result){ 
+								    echo '<option selected>'.$data->result.'</option>';
+								}else{
+									echo '<option>'.$data->result.'</option>';
+								}
+							    }
+							}?>
+						</select>
 			        </div>
 		        </div>
 	        </div>
@@ -306,4 +400,30 @@ $(document).ready(function() {
 		});
 	});
 </script> -->
+
+<script>
+$(document).ready(function() {
+    $('.scheme_of_examination').select2({
+        tags:true
+    });
+	$('.trade').select2({
+        tags:true
+    });
+	$('.iti_center').select2({
+        tags:true
+    });
+	$('.pass_out_year').select2({
+        tags:true
+    });
+	$('.annual_or_semester').select2({
+        tags:true
+    });
+	$('.annual_or_semester_details').select2({
+        tags:true
+    });
+	$('.result').select2({
+        tags:true
+    });
+});
+</script>
 

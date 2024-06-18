@@ -226,6 +226,7 @@ class Student extends CI_Controller {
 	  $cadet = $this->session->userdata('user');
 	  if($cadet){
 		$data['id'] = $cadet->id;
+
 		if(!empty($this->input->post('trade')))
 		{
 			$photo_path = '';
@@ -268,6 +269,22 @@ class Student extends CI_Controller {
 		    }
 
 		}else{
+			$data['scheme_of_examination'] = $this->skill_development->get_scheme_of_examination();
+			$trade = $this->skill_development->get_trade();
+			usort($trade, function($a, $b) {
+				$firstLetterA = strtolower(trim($a->trade));
+				$firstLetterB = strtolower(trim($b->trade));
+				return strcmp($firstLetterA, $firstLetterB);
+			});
+			$data['trade'] = $trade;
+
+			// print_r($data['trade']);die;
+			$data['iti_center'] = $this->skill_development->get_iti_center();
+			$data['pass_out_year'] = $this->skill_development->get_pass_out_year();
+			$data['annual_or_semester'] = $this->skill_development->get_annual_or_semester();
+			$data['annual_or_semester_details'] = $this->skill_development->get_annual_or_semesterdetails();
+			$data['result'] = $this->skill_development->get_result();
+
 			$this->load->view('includes/header');
 		    $this->load->view('skills/add_skill',$data);
 		    $this->load->view('includes/footer');
@@ -388,6 +405,21 @@ class Student extends CI_Controller {
 		   $data['skill_no'] = $skill_no;
 		   $data['id'] = $i;
 		   $data['cadet'] = $cadet;
+
+		   $data['scheme_of_examination'] = $this->skill_development->get_scheme_of_examination();
+			$trade = $this->skill_development->get_trade();
+			usort($trade, function($a, $b) {
+				$firstLetterA = strtolower(trim($a->trade));
+				$firstLetterB = strtolower(trim($b->trade));
+				return strcmp($firstLetterA, $firstLetterB);
+			});
+			$data['trade'] = $trade;
+
+			// print_r($data['trade']);die;
+			$data['iti_center'] = $this->skill_development->get_iti_center();
+			$data['pass_out_year'] = $this->skill_development->get_pass_out_year();
+			$data['annual_or_semester'] = $this->skill_development->get_annual_or_semester();
+			$data['annual_or_semester_details'] = $this->skill_development->get_annual_or_semesterdetails();
 
 		   if(!empty($cadet->name))
 		   {

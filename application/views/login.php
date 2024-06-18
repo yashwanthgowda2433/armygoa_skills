@@ -41,7 +41,7 @@ $(document).ready(function() {
                         <label for="validationCustom01" class="form-label">Email :</label>
                     </div>
 				    <div class="col-md-8">
-                        <input type="text" class="form-control" name="cadet_name" id="validationCustom01" required>
+                        <input type="text" class="form-control" name="cadet_name" id="validationCustom01" style="background: #fff;" required>
 			            <?php echo form_error( 'cadet_name', '<div class="invalid-feedback" style="display:block;">', '</div>');?>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ $(document).ready(function() {
                         <label for="validationCustom01" class="form-label">Password :</label>
                     </div>
 				    <div class="col-md-8">
-                        <input type="password" class="form-control" name="password" id="validationCustom01" required>
+                        <input type="password" class="form-control" name="password" id="validationCustom01" style="background: #fff;" required>
 			            <?php echo form_error( 'password', '<div class="invalid-feedback" style="display:block;">', '</div>');?>
                     </div>
                 </div>
